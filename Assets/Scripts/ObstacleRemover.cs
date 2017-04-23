@@ -12,9 +12,14 @@ public class ObstacleRemover : MonoBehaviour {
 	}
 
 	void OnMouseDown(){
+		if(transform.GetComponent<PlayerController>().currentTile.name.StartsWith("Portal")){
+			return;
+		}
+
 		particles.SetActive(true);
 		Invoke("DisableParticles", 0.5f);
 		audioSource.Play();
+
 		if(GameManager.instance.useObstacle && ((Mathf.Abs(transform.position.x - obstacle.position.x) <= obstacle.GetComponent<Obstacle>().GetMaxMoves() && transform.position.z == obstacle.position.z) || (Mathf.Abs(transform.position.z - obstacle.position.z) <= obstacle.GetComponent<Obstacle>().GetMaxMoves() && transform.position.x == obstacle.position.x))){
 			Obstacle.instance.Move(transform);
 		}
